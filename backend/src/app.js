@@ -9,8 +9,13 @@ const userRoutes = require('./routes/userRoutes');
 const app = express();
 const PORT = process.env.PORT || 2526;
 
+const corsOptions = {
+    origin: 'http://localhost:2728',
+    optionsSuccessStatus: 200
+};
 
-app.use(cors());
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 db.authenticate()
@@ -29,5 +34,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log('Server berjalan pada port ${PORT}');
+    console.log(`Server berjalan pada port ${PORT}`);
 });
