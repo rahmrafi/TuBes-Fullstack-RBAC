@@ -4,7 +4,6 @@ const findOrCreate = require('mongoose-findorcreate');
 
 const Schema = mongoose.Schema;
 
-
 const RoleSchema = new Schema({
     name: {
         type:String,
