@@ -1,21 +1,23 @@
-const mongoose = require('mongoose');
-const findOrCreate = require('mongoose-findorcreate');
+const { DataTypes } = require('sequelize');
+const sequelize = require('./config/database');
 
 
-const Schema = mongoose.Schema;
-
-
-const RoleSchema = new Schema({
-    name: {
-        type:String,
-        unique:true
+const Role = sequelize.define('Role', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
     },
-    description: String,
-    permissions: [String]
+    name: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false,
+    },
+    description: {
+        type: DataTypes.STRING,
+    },
+}, {
+    tableName: 'Roles',
 });
-
-RoleSchema.plugin(findOrCreate);
-
-const Role = new mongoose.model('Role', RoleSchema);
 
 module.exports = Role;

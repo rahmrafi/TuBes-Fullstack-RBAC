@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const findOrCreate = require('mongoose-findorcreate');
+const { DataTypes } = require('sequelize');
+const sequelize = require('./config/database');
 
 
 const Schema = mongoose.Schema;

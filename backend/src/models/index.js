@@ -1,34 +1,27 @@
+const { DataTypes, Sequelize } = require('sequelize');
+const sequelize = require('./config/database');
+
 const User = require('./User');
 const Role = require('./Role');
 const Permission = require('./Permission');
-const Karyawan = require('./Karyawan');
-const Pelanggan = require('./Pelanggan');
+const UserRole = require('./UserRole');
+const RolePermission = require('./RolePermission');
 
 
-User.belongsToMany(Role, { through: 'UserRole', foreignKey: 'userId', otherKey: 'roleId' });
-Role.belongsToMany(User, { through: 'UserRole', foreignKey: 'roleId', otherKey: 'userId' });
+User.belongsToMany(Role, { through: UserRole, foreignKey: 'userId' });
+Role.belongsToMany(User, { through: UserRole, foreignKey: 'roleId' });
 
-Role.belongsToMany(Permission, { through: 'RolePermission', foreignKey: 'roleId', otherKey: 'permissionId' });
-Permission.belongsToMany(Role, { through: 'RolePermission', foreignKey: 'permissionId', otherKey: 'roleId' });
+Role.belongsToMany(Permission, { through: RolePermission, foreignKey: 'roleId' });
+Permission.belongsToMany(Role, { through: RolePermission, foreignKey: 'permissionId' });
 
-Karyawan.hasOne(User, { foreignKey: 'entity_id', constraints: false, scope: { type: 'karyawan' } });
-User.belongsTo(Karyawan, { foreignKey: 'entity_id', constraints: false });
-
-User.hasOne(Karyawan, { foreignKey: 'user_id' });
-Karyawan.belongsTo(User, { foreignKey: 'user_id' });
-
-Pelanggan.hasOne(User, { foreignKey: 'entity_id', constraints: false, scope: { type: 'pelanggan' } });
-User.belongsTo(Pelanggan, { foreignKey: 'entity_id', constraints: false });
-
-User.hasOne(Pelanggan, { foreignKey: 'user_id' });
-Pelanggan.belongsTo(User, { foreignKey: 'user_id' });
-
-module.exports = {
-    Role,
+const db = {
+    sequelize,
+    Sequelize,
     User,
+    Role,
     Permission,
-    Karyawan,
-    Pelanggan,
-    
-    sequelize: request('.config/database')
-}
+    UserRole,
+    RolePermission
+};
+
+module.exports = db;

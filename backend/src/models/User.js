@@ -1,35 +1,36 @@
-const mongoose = require('mongoose');
-const findOrCreate = require('mongoose-findorcreate');
+const { DataTypes } = require('sequelize');
+const sequelize = require('./config/database');
 
-const Schema = mongoose.Schema;
-const UserSchema = new Schema({
+const User = sequelize.define('User', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
     username: {
-        type: String,
+        type: DataTypes.STRING,
         unique: true,
-        required: true
+        allowNull: false,
     },
     password: {
-        type: String,
-        required: true
+        type: DataTypes.STRING,
+        allowNull: false,
     },
     email: {
-        type: String,
+        type: DataTypes.STRING,
         unique: true,
-        required: true
+        allowNull: false,
     },
-    roles: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Role'
-    }],
     createdAt: {
-        type: Date,
-        default: Date.now
-    }
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+    },
+}, {
+    tableName: 'Users',
 });
-
-userSchema.plugin({ usernameField: 'username', emailField: 'email' });
-userSchema.plugin(findOrCreate);
-
-const User = new mongoose.model('User', UserSchema);
 
 module.exports = User;
