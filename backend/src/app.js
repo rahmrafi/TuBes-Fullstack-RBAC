@@ -1,4 +1,5 @@
 require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const db = require('./config/database');
@@ -13,7 +14,6 @@ const corsOptions = {
     origin: 'http://localhost:2728',
     optionsSuccessStatus: 200
 };
-
 
 app.use(cors(corsOptions));
 app.use(express.json());
