@@ -2,18 +2,18 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
 
-const Schema = mongoose.Schema;
-
-const permissionSchema = new Schema({
-    name: {
-        type:String,
-        unique: true
+const Permission = sequelize.define('Permission', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
     },
-    description: String
+    permissionId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+}, {
+    tableName: 'Permission',
 });
-
-permissionSchema.plugin(findOrCreate);
-
-const Permission = new mongoose.model('Permission', permissionSchema);
 
 module.exports = Permission;

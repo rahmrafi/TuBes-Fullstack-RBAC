@@ -18,8 +18,8 @@ const Karyawan = sequelize.define('Karyawan', {
     },
     email: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
+        allowNull: true,
+        unique: false
     },
     password: {
         type: DataTypes.STRING,
@@ -27,8 +27,6 @@ const Karyawan = sequelize.define('Karyawan', {
     },
     role: {
         type: DataTypes.STRING,
-        // enum: ['admin'] (Sequelize tidak memiliki enum seperti Mongoose secara langsung)
-        // Anda bisa memvalidasi ini di controller atau di Sequelize Hooks
         allowNull: false
     }
 }, {
