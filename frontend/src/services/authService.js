@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:2526/api';
+app.use('/api/auth', authRoutes);
+app.use('/api/users', authRoutes);
 
 const login = async (username, password) => {
     try {

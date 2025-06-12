@@ -1,105 +1,91 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './contexts/AuthContext';
-import PrivateRoute from './components/PrivateRoute';
-import Layout from './components/Layout/Layout';
+// frontend/src/App.js
+import React, { useContext } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthContext, AuthProvider } from './contexts/AuthContext';
+import ThemeProvider from 'components/Theme';
+import SignUp from './pages/Signup';
+import SignIn from './pages/Signin';
+import Dashboard from './pages/Dashboard';
+// Import pages yang akan ada di dashboard
+// import UsersPage from './pages/UsersPage';
+// import DataPage from './pages/DataPage';
+// import LogAktivitasPage from './pages/LogAktivitasPage';
 
-import Home from './pages/Home';
-import Login from './pages/Login';
-import MainDashboard from './pages/MainDashboard';
-import UsersPage from './pages/Users';
-import RolesPage from './pages/Roles';
-import PermissionsPage from './pages/Permissions';
-import LogPage from './pages/Log';
-import ProfilePage from './pages/Profile';
-import TestFeatPage from './pages/TestFeat';
+// Komponen PrivateRoute untuk melindungi route
+const PrivateRoute = ({ children, allowedRoles }) => {
+    const { user, loading, hasRole } = useContext(AuthContext);
 
+    if (loading) {
+        return <div>Loading authentication...</div>; // Atau spinner
+    }
+
+    if (!user) {
+        return <Navigate to="/signin" replace />;
+    }
+
+    if (allowedRoles && allowedRoles.length > 0) {
+        const userHasAllowedRole = allowedRoles.some(role => hasRole(role));
+        if (!userHasAllowedRole) {
+            // Jika user tidak memiliki role yang diizinkan, arahkan ke dashboard atau halaman 403
+            return <Navigate to="/dashboard" replace />;
+        }
+    }
+
+    return children;
+};
 
 function App() {
     return (
         <Router>
-            <AuthProvider>
-                <Routes>
-                    {/* Routes yang tidak menggunakan layout (misalnya Login, Register) */}
-                    <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
+            <ThemeProvider>
+                <AuthProvider>
+                    <Routes>
+                        <Route path="/signin" element={<SignIn />} />
+                        <Route path="/signup" element={<SignUp />} />
 
-                    {/* Routes yang menggunakan layout dan dilindungi */}
-                    <Route
-                        path="/dashboard"
-                        element={
-                            <PrivateRoute>
-                                <Layout pageTitle="Main Dashboard">
-                                    <MainDashboard />
-                                </Layout>
-                            </PrivateRoute>
-                        }
-                    />
-                    <Route
-                        path="/users"
-                        element={
-                            <PrivateRoute requiredRoles={['admin']}>
-                                <Layout pageTitle="Users">
-                                    <UsersPage />
-                                </Layout>
-                            </PrivateRoute>
-                        }
-                    />
-                     <Route
-                        path="/roles"
-                        element={
-                            <PrivateRoute requiredRoles={['admin']}>
-                                <Layout pageTitle="Roles">
-                                    <RolesPage />
-                                </Layout>
-                            </PrivateRoute>
-                        }
-                    />
-                     <Route
-                        path="/permissions"
-                        element={
-                            <PrivateRoute requiredRoles={['admin']}>
-                                <Layout pageTitle="Permissions">
-                                    <PermissionsPage />
-                                </Layout>
-                            </PrivateRoute>
-                        }
-                    />
-                     <Route
-                        path="/log"
-                        element={
-                            <PrivateRoute requiredRoles={['admin']}>
-                                <Layout pageTitle="Log">
-                                    <LogPage />
-                                </Layout>
-                            </PrivateRoute>
-                        }
-                    />
-                     <Route
-                        path="/profile"
-                        element={
-                            <PrivateRoute>
-                                <Layout pageTitle="Profile">
-                                    <ProfilePage />
-                                </Layout>
-                            </PrivateRoute>
-                        }
-                    />
-                    <Route
-                        path="/test-feat"
-                        element={
-                            <PrivateRoute requiredRoles={['admin', 'dev']}>
-                                <Layout pageTitle="Test Feat">
-                                    <TestFeatPage />
-                                </Layout>
-                            </PrivateRoute>
-                        }
-                    />
+                        {/* Route Dashboard utama */}
+                        <Route
+                            path="/dashboard"
+                            element={
+                                <PrivateRoute allowedRoles={['admin', 'user']}> {/* Hanya admin atau user yang bisa akses dashboard */}
+                                    <Dashboard />
+                                </PrivateRoute>
+                            }
+                        />
+                        {/* Sub-route Dashboard */}
+                        <Route
+                            path="/dashboard/users"
+                            element={
+                                <PrivateRoute allowedRoles={['admin']}> {/* Hanya admin yang bisa akses halaman users */}
+                                    {/* <UsersPage /> */} {/* Ganti dengan komponen UsersPage Anda */}
+                                    <Dashboard /> {/* Untuk demo, gunakan Dashboard sebagai placeholder */}
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route
+                            path="/dashboard/data"
+                            element={
+                                <PrivateRoute allowedRoles={['admin', 'user']}> {/* Semua user bisa akses data */}
+                                    {/* <DataPage /> */}
+                                    <Dashboard /> {/* Untuk demo, gunakan Dashboard sebagai placeholder */}
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route
+                            path="/dashboard/log-aktivitas"
+                            element={
+                                <PrivateRoute allowedRoles={['admin']}> {/* Hanya admin yang bisa akses log */}
+                                    {/* <LogAktivitasPage /> */}
+                                    <Dashboard /> {/* Untuk demo, gunakan Dashboard sebagai placeholder */}
+                                </PrivateRoute>
+                            }
+                        />
 
-                    {/* Redirect ke halaman login jika rute tidak ditemukan dan tidak diautentikasi */}
-                    {/* <Route path="*" element={<Navigate to="/login" replace />} /> */}
-                </Routes>
-            </AuthProvider>
+                        {/* Redirect default ke signin jika tidak ada path yang cocok */}
+                        <Route path="*" element={<Navigate to="/signin" replace />} />
+                    </Routes>
+                </AuthProvider>
+            </ThemeProvider>
         </Router>
     );
 }

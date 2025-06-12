@@ -1,5 +1,8 @@
 {
     "compilerOptions": {
-        "forceConsistentCasingInFileNames": false,
-    }
+        "baseUrl": "src",
+        "paths": { "@components/*": ["@components/*"], "@pages/*": ["pages/*"] },
+        "forceConsistentCasingInFileNames": false
+    },
+    "exclude": ["node_modules", "build"]
 }
