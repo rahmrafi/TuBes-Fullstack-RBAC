@@ -30,6 +30,7 @@ Langkah 4 :
     jalankan database yang sudah ada
 
 Langkah 5 :
+
     npm start (backend)
     npm start (frontend)
 
