@@ -1,4 +1,3 @@
-// frontend/src/pages/Signup.js
 import React, { useState, useContext } from 'react';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
@@ -67,11 +66,11 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignUp() {
-    const [username, setUsername] = useState(''); // Mengganti 'name' menjadi 'username'
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [role, setRole] = useState('user'); // Menggunakan 'role' sebagai state untuk role yang dipilih
+    const [role, setRole] = useState('user');
 
     const [usernameError, setUsernameError] = useState(false);
     const [usernameErrorMessage, setUsernameErrorMessage] = useState('');
@@ -83,7 +82,7 @@ export default function SignUp() {
     const [confirmPasswordErrorMessage, setConfirmPasswordErrorMessage] = useState('');
     const [registerError, setRegisterError] = useState('');
 
-    const { login } = useContext(AuthContext); // Untuk auto-login setelah register (opsional)
+    const { login } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const theme = useTheme();
@@ -141,13 +140,13 @@ export default function SignUp() {
 
         try {
             const payload = {
-                username: username, // Kirim username
-                email: email,       // Kirim email
-                password: password, // Kirim password
-                role: role          // Kirim role yang dipilih
+                username: username,
+                email: email,
+                password: password,
+                role: role
             };
 
-            // Mengirim ke satu endpoint registrasi: /auth/register
+            // Mengirim ke satu endpoint registrasi: /auth/register //
             const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/register`, payload);
             console.log("API Response:", response.data);
 
@@ -192,9 +191,6 @@ export default function SignUp() {
                                 onChange={(e) => setRole(e.target.value)}
                             >
                                 <MenuItem value="user">User</MenuItem>
-                                {/* Pilihan role karyawan jika Anda ingin membedakannya dari user biasa */}
-                                {/* <MenuItem value="karyawan">Karyawan</MenuItem> */}
-                                {/* Admin role: Hanya untuk testing atau skenario khusus */}
                                 <MenuItem value="admin">Admin</MenuItem>
                             </Select>
                         </FormControl>
@@ -213,8 +209,6 @@ export default function SignUp() {
                                 onChange={(e) => setUsername(e.target.value)}
                             />
                         </FormControl>
-
-                        {/* Masukkan Email */}
                         <FormControl fullWidth>
                             <FormLabel htmlFor="email">Masukkan Email</FormLabel>
                             <TextField
@@ -232,7 +226,6 @@ export default function SignUp() {
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </FormControl>
-                        {/* Masukkan Password */}
                         <FormControl fullWidth>
                             <FormLabel htmlFor="password">Masukkan Password</FormLabel>
                             <TextField
@@ -250,7 +243,6 @@ export default function SignUp() {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </FormControl>
-                        {/* Masukkan Konfirmasi Password */}
                         <FormControl fullWidth>
                             <FormLabel htmlFor="confirm-password">Konfirmasi Password</FormLabel>
                             <TextField

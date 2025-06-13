@@ -1,38 +1,18 @@
-// frontend/src/pages/Dashboard.js
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 
 // MUI Imports
-import {
-    Box,
-    Typography,
-    Drawer,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    AppBar,
-    Toolbar,
-    IconButton,
-    Avatar,
-    Menu,
-    MenuItem,
-    Divider,
-    CssBaseline,
-    Stack,
-    Grid,
-    Card,
-    CardContent
+import { Box, Typography, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, AppBar, Toolbar,
+        IconButton, Avatar, Menu, MenuItem, Divider, CssBaseline, Stack, Grid, Card, CardContent
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
-import AnalyticsIcon from '@mui/icons-material/Analytics'; // Untuk Data
-import HistoryIcon from '@mui/icons-material/History'; // Untuk Log Aktivitas
-import ExitToAppIcon from '@mui/icons-material/ExitToApp'; // Untuk Sign Out
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+import HistoryIcon from '@mui/icons-material/History';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { styled } from '@mui/system';
@@ -81,7 +61,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
 }));
@@ -91,7 +70,7 @@ function Dashboard() {
     const location = useLocation();
     const navigate = useNavigate();
     const [openDrawer, setOpenDrawer] = useState(false);
-    const [anchorEl, setAnchorEl] = useState(null); // For user menu
+    const [anchorEl, setAnchorEl] = useState(null);
 
     const handleDrawerOpen = () => {
         setOpenDrawer(true);
@@ -111,7 +90,7 @@ function Dashboard() {
 
     const handleLogout = () => {
         logout();
-        navigate('/signin'); // Arahkan ke halaman login setelah logout
+        navigate('/signin');
         handleClose();
     };
 
@@ -132,7 +111,6 @@ function Dashboard() {
     };
 
     if (!user) {
-        // Ini akan sangat singkat karena biasanya ada PrivateRoutes atau Logic di App.js
         return <Typography variant="h6">Anda tidak memiliki akses ke halaman ini. Silakan login.</Typography>;
     }
 
@@ -273,7 +251,6 @@ function Dashboard() {
                                         <Typography variant="h5" component="div" gutterBottom>
                                             Jumlah Pengguna
                                         </Typography>
-                                        {/* Ini akan memerlukan API call ke backend untuk mendapatkan jumlah user */}
                                         <Typography variant="h4">XX</Typography>
                                         <Typography variant="body2" color="text.secondary">
                                             Total pengguna terdaftar

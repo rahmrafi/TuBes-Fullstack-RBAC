@@ -7,12 +7,8 @@ import SignUp from './pages/Signup';
 import SignIn from './pages/Signin';
 import Dashboard from './pages/Dashboard';
 import UsersPage from './pages/Users';
-// Import pages yang akan ada di dashboard
-// import UsersPage from './pages/UsersPage';
-// import DataPage from './pages/DataPage';
-// import LogAktivitasPage from './pages/LogAktivitasPage';
 
-// Komponen PrivateRoute untuk melindungi route
+
 const PrivateRoute = ({ children, allowedRoles }) => {
     const { user, loading, hasRole } = useContext(AuthContext);
 
