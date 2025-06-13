@@ -212,25 +212,25 @@ function Dashboard() {
                         </ListItemButton>
                     </ListItem>
 
-                    {/* Hanya tampilkan 'Users' jika user adalah admin */}
-                    {hasRole('admin') && (
-                        <ListItem disablePadding component={RouterLink} to="/dashboard/users">
-                            <ListItemButton selected={location.pathname === '/dashboard/users'}>
+                        <ListItem disablePadding component={RouterLink} to="/pages/users">
+                            <ListItemButton selected={location.pathname === '/pages/users'}>
                                 <ListItemIcon><PeopleIcon /></ListItemIcon>
                                 <ListItemText primary="Users" />
                             </ListItemButton>
                         </ListItem>
+
+                    {hasRole('admin') && (
+                        <ListItem disablePadding component={RouterLink} to="/pages/data">
+                            <ListItemButton selected={location.pathname === '/pages/data'}>
+                                <ListItemIcon><AnalyticsIcon /></ListItemIcon>
+                                <ListItemText primary="Data" />
+                            </ListItemButton>
+                        </ListItem>
                     )}
 
-                    <ListItem disablePadding component={RouterLink} to="/dashboard/data">
-                        <ListItemButton selected={location.pathname === '/dashboard/data'}>
-                            <ListItemIcon><AnalyticsIcon /></ListItemIcon>
-                            <ListItemText primary="Data" />
-                        </ListItemButton>
-                    </ListItem>
 
-                    <ListItem disablePadding component={RouterLink} to="/dashboard/log-aktivitas">
-                        <ListItemButton selected={location.pathname === '/dashboard/log-aktivitas'}>
+                    <ListItem disablePadding component={RouterLink} to="/pages/log-aktivitas">
+                        <ListItemButton selected={location.pathname === '/pages/log-aktivitas'}>
                             <ListItemIcon><HistoryIcon /></ListItemIcon>
                             <ListItemText primary="Log Aktivitas" />
                         </ListItemButton>
@@ -245,7 +245,7 @@ function Dashboard() {
                 </List>
             </Drawer>
             <MainContent open={openDrawer}>
-                <DrawerHeader /> {/* Spacer agar konten tidak tertutup AppBar */}
+                <DrawerHeader />
                 <Box>
                     <Typography variant="body1" color="text.secondary">
                         pages/{getPageTitle(location.pathname).toLowerCase().replace(/\s/g, '-')}
@@ -253,8 +253,6 @@ function Dashboard() {
                     <Typography variant="h4" gutterBottom>
                         {getPageTitle(location.pathname)}
                     </Typography>
-
-                    {/* Bagian Dashboard Content */}
                     {location.pathname === '/dashboard' && (
                         <Grid container spacing={3}>
                             <Grid item xs={12} md={6}>
@@ -269,7 +267,6 @@ function Dashboard() {
                                     </CardContent>
                                 </Card>
                             </Grid>
-                            {/* Card untuk Jumlah Users (Placeholder) */}
                             <Grid item xs={12} md={6}>
                                 <Card variant="outlined">
                                     <CardContent>
@@ -277,7 +274,7 @@ function Dashboard() {
                                             Jumlah Pengguna
                                         </Typography>
                                         {/* Ini akan memerlukan API call ke backend untuk mendapatkan jumlah user */}
-                                        <Typography variant="h4">XX</Typography> {/* Placeholder */}
+                                        <Typography variant="h4">XX</Typography>
                                         <Typography variant="body2" color="text.secondary">
                                             Total pengguna terdaftar
                                         </Typography>
@@ -286,12 +283,10 @@ function Dashboard() {
                             </Grid>
                         </Grid>
                     )}
-
-                    {/* Placeholder untuk halaman lain (Users, Data, Log Aktivitas) */}
-                    {location.pathname === '/dashboard/users' && hasRole('admin') && (
+                    {location.pathname === '/dashboard/users' && (
                         <Typography variant="h5">Halaman Manajemen Pengguna (khusus Admin)</Typography>
                     )}
-                     {location.pathname === '/dashboard/data' && (
+                     {location.pathname === '/dashboard/data' && hasRole('admin') && (
                         <Typography variant="h5">Halaman Data Umum</Typography>
                     )}
                      {location.pathname === '/dashboard/log-aktivitas' && (

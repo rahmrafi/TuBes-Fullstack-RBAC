@@ -152,13 +152,13 @@ export default function SignIn() {
                         }}
                     >
                         <FormControl>
-                            <FormLabel htmlFor="identifier">Nama Pengguna atau Email</FormLabel>
+                            <FormLabel htmlFor="identifier">Nama atau Email</FormLabel>
                             <TextField
                                 required fullWidth
                                 id="identifier"
                                 type="text"
                                 name="identifier"
-                                placeholder="Nama Pengguna atau Email"
+                                placeholder="Nama atau Email"
                                 autoComplete="username"
                                 variant="outlined"
                                 error={identifierError}

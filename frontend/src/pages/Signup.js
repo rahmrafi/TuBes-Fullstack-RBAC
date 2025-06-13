@@ -152,7 +152,7 @@ export default function SignUp() {
             console.log("API Response:", response.data);
 
             alert('Pendaftaran berhasil! Silakan login.');
-            navigate('/signin'); // Arahkan kembali ke halaman Sign In
+            navigate('/signin');
 
         } catch (error) {
             console.error('Registration error:', error.response?.data?.message || error.message);
@@ -183,26 +183,23 @@ export default function SignUp() {
                         onSubmit={handleSubmit}
                         sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
                     >
-                        {/* Pilih Role */}
-                        <FormControl fullWidth> {/* Tambahkan fullWidth untuk Select */}
+                        <FormControl fullWidth>
                             <FormLabel htmlFor='role-select'>Pilih Role</FormLabel>
                             <Select
                                 required
-                                id='role-select' // Menggunakan id yang unik
+                                id='role-select'
                                 value={role}
                                 onChange={(e) => setRole(e.target.value)}
                             >
-                                <MenuItem value="user">User (Pelanggan)</MenuItem>
+                                <MenuItem value="user">User</MenuItem>
                                 {/* Pilihan role karyawan jika Anda ingin membedakannya dari user biasa */}
                                 {/* <MenuItem value="karyawan">Karyawan</MenuItem> */}
                                 {/* Admin role: Hanya untuk testing atau skenario khusus */}
                                 <MenuItem value="admin">Admin</MenuItem>
                             </Select>
                         </FormControl>
-
-                        {/* Masukkan Nama Pengguna */}
                         <FormControl fullWidth>
-                            <FormLabel htmlFor="username">Masukkan Nama Pengguna</FormLabel>
+                            <FormLabel htmlFor="username">Masukkan Nama</FormLabel>
                             <TextField
                                 required
                                 fullWidth
