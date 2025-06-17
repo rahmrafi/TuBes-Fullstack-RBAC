@@ -1,4 +1,4 @@
-const { User, Role, UserRole } = require('./models');
+const { User, Role, UserRole } = require('../models');
 
 
 exports.getAllUsers = async (req, res) => {
@@ -56,5 +56,14 @@ exports.getUserRoles = async (req, res) => {
     res.status(200).json({ roles: user.Roles });
   } catch (error) {
     res.status(500).json({ message: 'Gagal mengambil role user', error });
+  }
+};
+
+exports.countUser = async (req, res) => {
+  try {
+    const count = await User.count();
+    res.status(200).json({ totalUsers: count});
+  } catch (error) {
+    res.status(500).json({ message: 'Gagal menghitung user', error});
   }
 };

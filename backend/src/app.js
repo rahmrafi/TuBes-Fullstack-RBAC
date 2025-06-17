@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const sequelize = require('./config/database');
 const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes')
 const { User } = require('./models');
 
 
@@ -16,6 +17,7 @@ app.use(express.json());
 
 // Routes //
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 // Sinkronisasi Database //
 sequelize.sync({ alter: true })

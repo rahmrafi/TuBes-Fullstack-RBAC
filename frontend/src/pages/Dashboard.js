@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 
@@ -16,6 +16,7 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { styled } from '@mui/system';
+import { getUserCount } from 'services/apiCall';
 
 
 const drawerWidth = 240;
@@ -93,6 +94,18 @@ function Dashboard() {
         navigate('/signin');
         handleClose();
     };
+
+    const [userCount, setUserCount] = useState(0);
+
+    useEffect(() => {
+        const fetchUserCount = async () => {
+            const count = await getUserCount();
+            setUserCount(count);
+        };
+        if (location.pathname === '/dashboard') {
+            fetchUserCount();
+        }
+    }, [location.pathname]);
 
     // Fungsi untuk mendapatkan nama halaman dari path
     const getPageTitle = (path) => {
@@ -251,7 +264,7 @@ function Dashboard() {
                                         <Typography variant="h5" component="div" gutterBottom>
                                             Jumlah Pengguna
                                         </Typography>
-                                        <Typography variant="h4">XX</Typography>
+                                        <Typography variant="h4">{userCount}</Typography>
                                         <Typography variant="body2" color="text.secondary">
                                             Total pengguna terdaftar
                                         </Typography>
